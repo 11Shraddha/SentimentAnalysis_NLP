@@ -69,6 +69,10 @@ To visualize word frequency distributions, the project used the wordcloud librar
 To address limitations and enhance accuracy, advanced machine learning algorithms tailored for natural language processing were integrated. This approach aimed to achieve higher accuracy in sentiment classification by capturing intricate patterns and nuances in tweets that rule-based methods may miss. The integration of machine learning algorithms also ensured the robust handling of diverse and dynamic Twitter data, allowing the system to generalize effectively to unseen tweets.
 
 This comprehensive feature engineering and analysis process forms the foundation of the sentiment analysis research, enabling a deeper understanding of sentiment in multilingual datasets.
+
+![GitHub Logo](images/github_logo.png)
+
+
 ## Machine Learning Models
 
 The core of the research lies in the investigation of two prominent machine learning models: Naive Bayes and Logistic Regression. These models are meticulously explained, emphasizing their mathematical foundations and inner workings. The Naive Bayes theorem, rooted in conditional probability, is demystified to provide a comprehensive understanding of its application in sentiment analysis.
