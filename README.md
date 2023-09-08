@@ -70,7 +70,9 @@ To address limitations and enhance accuracy, advanced machine learning algorithm
 
 This comprehensive feature engineering and analysis process forms the foundation of the sentiment analysis research, enabling a deeper understanding of sentiment in multilingual datasets.
 
-![GitHub Logo](images/github_logo.png)
+![GitHub 1](github_1.png)
+
+![GitHub 2](github_2.png)
 
 
 ## Machine Learning Models
