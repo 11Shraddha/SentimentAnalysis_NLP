@@ -1,0 +1,133 @@
+
+# https://medium.com/swlh/using-twitter-api-for-tweets-sentiment-analysis-590c97ce52d8
+
+import matplotlib.pyplot as plt
+import re 
+import pandas as pd
+from textblob import TextBlob 
+import pandas as pd
+import string
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+n_words= set(stopwords.words('english'))
+from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
+from nltk.stem import WordNetLemmatizer 
+from wordcloud import WordCloud,STOPWORDS
+porter = PorterStemmer()
+
+lemmatizer = WordNetLemmatizer() 
+nltk.download('punkt')
+nltk.download('wordnet')
+
+api_key = '0XvixMokYcidWBt8OOYnvtwQR'
+api_key_secret = 'sgA5N2ReZRDyIu81wwTN9HOR0kCvmrsQuxdRDMToeVGW3KJMJ1'
+
+access_token = '1697319180561707009-cUTfv8fD3nWWgihUke3iExWLbggslE'
+access_token_secret ="F6bCcukLwqSZ9EHZest1zTDbNBTm9zkwYEQb5gMIwmrj7"
+bearer_token = 'AAAAAAAAAAAAAAAAAAAAABfTpgEAAAAAWGz5fwLZ9NcG8TtjkEzI3rbR%2Fwg%3DwtBFaFcxh9WKcp0xnGcnDFLwgXoF5kjITizO45X6obfpcwdda8'
+
+client_id = 'UGxsdG03R0lEOFFYaFA2QUwzdkE6MTpjaQ'
+client_secret = 'yIkUh872CcXWastZLahrMjvEYHr6FIQv0-0N4pmZhpPx9gw7e0'
+
+
+
+# Stemming:
+def clean(text):
+  # removing @ tags and links from the text
+  text= ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) |(\w+:\/\/\S+)", " ", text).split()) 
+  # converting all letters to lower case and relacing '-' with spaces.
+  text= text.lower().replace('-', ' ')
+  # removing stowards and numbers
+  table= str.maketrans('', '', string.punctuation+string.digits)
+  text= text.translate(table)
+  # tokenizing words 
+  tokens = word_tokenize(text)
+  # stemming the words 
+  stemmed = [porter.stem(word) for word in tokens]
+  words = [w for w in stemmed if not w in n_words]
+
+  text = ' '.join(words)
+  return text
+
+
+# fetch the tweets using API and label with there emotion
+def get_tweets(query, count = 10): 
+
+      tweets = [] 
+
+      try: 
+          # call twitter api to fetch tweets 
+          fetched_tweets = client.search_recent_tweets(query=query, count = count) 
+          for tweet in fetched_tweets:
+            # cleaning the tweets
+            tweet= clean(tweet.text)
+            # getting the sentiment from textblob
+            analysis = TextBlob(tweet)
+            senti= analysis.sentiment.polarity
+            # labeling the sentiment
+            if senti<0 :
+              emotion = "NEG"
+            elif senti>0:
+              emotion= "POS"
+            else:
+              emotion= "NEU"
+            # appending all data
+            tweets.append((tweet, senti, emotion))
+            
+          return tweets
+      except tweepy.TwitterServerError as e:
+          # print error (if any) 
+          print("Error : " + str(e))
+
+
+
+# getting the api access
+client = tweepy.Client(bearer_token=bearer_token, access_token=access_token, access_token_secret=access_token_secret)
+
+# calling function to get tweets, count is the number of tweets.
+tweets = get_tweets(query = "UK New prime minister", count = 10000)
+df= pd.DataFrame(tweets, columns= ['tweets', 'senti', 'emotion'])
+# droping retweets
+df= df.drop_duplicates()
+
+sentiments = []
+
+# Analyzing the sentiment:
+for tweet_text in tweets:
+    analysis = TextBlob(tweet_text)
+    senti = analysis.sentiment.polarity
+
+    if senti < 0:
+        emotion = "NEG"
+    elif senti > 0:
+        emotion = "POS"
+    else:
+        emotion = "NEU"
+
+    sentiments.append((tweet_text, senti, emotion))
+
+
+# Let's take a look at the most used words in Positive emotion expressed. We will be creating a word cloud using wordcloud library.
+def wordcloud_draw(data, color = 'black'):
+    words = ' '.join(data)
+    cleaned_word = " ".join([word for word in words.split()
+                                and not word.startswith('#')
+                                and word != 'rt'  
+                            ])
+    wordcloud = WordCloud(
+                      background_color=color,
+                      width=2500,
+                      height=2000
+                     ).generate(cleaned_word)
+    # using matplotlib to display the images in notebook itself.
+    plt.figure(1,figsize=(13, 13))
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
+df_pos = df[ df['emotion'] == 'POS']
+df_pos = df_pos['tweets']
+wordcloud_draw(df_pos, 'white')
+
+
