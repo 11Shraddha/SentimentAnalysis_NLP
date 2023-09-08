@@ -9,7 +9,6 @@ This repository contains research on sentiment analysis, which is the automated 
 - [Feature Engineering](#feature-engineering)
 - [Machine Learning Models](#machine-learning-models)
 - [Experiments and Evaluation](#experiments-and-evaluation)
-- [Implications](#implications)
 - [Keywords](#keywords)
 
 ## Introduction
