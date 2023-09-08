@@ -79,13 +79,19 @@ This comprehensive feature engineering and analysis process forms the foundation
 
 The core of the research lies in the investigation of two prominent machine learning models: Naive Bayes and Logistic Regression. These models are meticulously explained, emphasizing their mathematical foundations and inner workings. The Naive Bayes theorem, rooted in conditional probability, is demystified to provide a comprehensive understanding of its application in sentiment analysis.
 
+In my sentiment analysis research, we develop and evaluate machine learning models, including Naive Bayes and Logistic Regression, to classify social media text as positive or negative in both English and Hindi. The Naive Bayes model relies on Bayesian probability principles, using prior, likelihood, and posterior probabilities for classification. Logistic Regression, on the other hand, employs a logistic function to estimate the likelihood of text belonging to a sentiment class. We explore N-grams for enhanced text representation. Both models undergo comprehensive pipelines, including data preprocessing, vectorization, training, hyperparameter tuning, and performance evaluation, aiming to improve sentiment analysis accuracy for social media content.
+
 ## Experiments and Evaluation
 
 The research design encompasses extensive experiments and evaluations, aiming to assess the performance of these algorithms across different languages and cultural contexts. Metrics like accuracy, sensitivity, specificity, and F1 score are employed to provide a holistic evaluation of the models' effectiveness.
 
-## Implications
+The sentiment analysis research involved the use of two machine learning models: Naive Bayes (NB) and Logistic Regression. The dataset was split into training (85%) and testing (15%) sets. The MultinomialNB classifier was trained on the training data and evaluated using the testing data, employing confusion matrices and classification reports to assess its performance.
 
-The implications of this research extend beyond sentiment analysis, influencing the fields of natural language processing and social media analytics. The findings contribute significantly to our understanding of how machine learning can be harnessed to decipher sentiment across diverse linguistic landscapes, fostering advancements in sentiment analysis research.
+Additionally, a Logistic Regression model was explored for sentiment analysis. The model was trained with hyperparameters C=1 and 'liblinear' solver and evaluated using accuracy as the primary metric. Comparatively, the Logistic Regression model outperformed the Naive Bayes model across all metrics.
+
+To further enhance performance, an n-gram analysis was conducted, considering up to 4-word n-grams. This analysis led to an improved test accuracy of 90.8% for the Logistic Regression model. Capturing multi-word phrases through n-grams proved advantageous for sentiment classification, allowing the model to grasp nuanced expressions and context within the text.
+
+The evaluation results are summarized in Table 2, showing accuracy, precision, recall, and F1-score for each method, with the Logistic Regression model using 4-word n-grams achieving the highest accuracy and performance metrics.
 
 ## Keywords
 
